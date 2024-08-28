@@ -57,3 +57,12 @@
         <li><code>image_url</code>: URL da imagem</li>
         <li><code>confirmed</code>: Indica se o valor foi confirmado</li>
     </ul>
+
+<h2>Imagem modelo de envio para IA</h2>
+<p>Conta de luz:</p>
+
+![Conta de luz exemplo](https://github.com/user-attachments/assets/198f5906-b98a-4038-91de-022cea0bbe4f)
+
+<p>Conta de gás:</p>
+
+![Conta de gás exemplo](https://github.com/user-attachments/assets/4ac9c613-0e4a-468f-b038-73adf0696f4d)
