@@ -30,7 +30,7 @@ export const processImageWithGemini = async (
 
   const promptText =
     measureType === "WATER"
-      ? "Describe the water consumption value in this image."
+      ? "Describe the water consumption value in this image. Search for the value above the text 'Consumo (m³)'"
       : "Describe the gas consumption value in this image.";
 
   const result = await model.generateContent([
@@ -43,6 +43,7 @@ export const processImageWithGemini = async (
     { text: promptText },
   ]);
 
+  console.log(result.response.text());
   const measure = extractValueFromText(result.response.text());
 
   return { measure, fileUri };
