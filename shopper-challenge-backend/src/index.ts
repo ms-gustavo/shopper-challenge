@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import connectToDb from "./db/db";
 import imageRoutes from "./routes/imageRoutes";
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(
 app.use(express.json());
 app.use("/", imageRoutes);
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  await connectToDb();
   console.log(`Server is running on port ${port}`);
 });
