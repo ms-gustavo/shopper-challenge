@@ -25,3 +25,17 @@ export const validateUploadRequest = (body: any) => {
 
   return body;
 };
+
+export const validadeConfirmRequest = (body: any) => {
+  const { measure_uuid, confirmed_value } = body;
+
+  if (!measure_uuid || typeof measure_uuid !== "string") {
+    throw new Error("UUID inválido");
+  }
+
+  if (!confirmed_value || typeof confirmed_value !== "number") {
+    throw new Error("Valor confirmado inválido");
+  }
+
+  return body;
+};

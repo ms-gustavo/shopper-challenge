@@ -4,7 +4,9 @@ interface IMeasurement extends Document {
   customer_code: string;
   measure_datetime: Date;
   measure_type: "WATER" | "GAS";
+  measure_value: number;
   measure_uuid: string;
+  confirmed: boolean;
 }
 
 const MeasurementSchema: Schema = new Schema({
@@ -22,10 +24,18 @@ const MeasurementSchema: Schema = new Schema({
     required: true,
     enum: ["WATER", "GAS"],
   },
+  measure_value: {
+    type: Number,
+    required: true,
+  },
   measure_uuid: {
     type: String,
     required: true,
     unique: true,
+  },
+  confirmed: {
+    type: Boolean,
+    default: false,
   },
 });
 
