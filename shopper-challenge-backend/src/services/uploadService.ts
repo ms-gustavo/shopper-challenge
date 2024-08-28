@@ -25,14 +25,13 @@ export const processImageWithGemini = async (
   await fileManager.getFile(uploadResponse.file.name);
   const fileUri = uploadResponse.file.uri;
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro",
+    model: "gemini-1.5-flash",
   });
 
   const promptText =
     measureType === "WATER"
-      ? "Identify if it is a water bill, if not, return a 'Essa não é uma conta de água'. Describe the water consumption value in this image. Search for the value above the text 'Consumo (m³)'"
-      : "Identify if it is a gas bill, if not, return a string 'Essa não é uma conta de gás'. Describe the gas consumption value in this image.";
-
+      ? "Describe the water consumption value in this image. Search for the value above the text 'Consumo (m³)'"
+      : " Describe the gas consumption value in this image.";
   const result = await model.generateContent([
     {
       fileData: {
@@ -43,13 +42,6 @@ export const processImageWithGemini = async (
     { text: promptText },
   ]);
 
-  const isTheCorrectBill = result.response.text();
-  if (
-    isTheCorrectBill == "Essa não é uma conta de água" ||
-    "Essa não é uma conta de gás"
-  ) {
-    throw new Error("Tipo de conta inválida");
-  }
   const measure = extractValueFromText(result.response.text());
 
   return { measure, fileUri };

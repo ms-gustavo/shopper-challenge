@@ -35,13 +35,13 @@ export const uploadImage = async (req: Request, res: Response) => {
       base64Data,
       measure_type
     );
-
     const newMeasurement = new Measurement({
       customer_code,
       measure_datetime: measureDate,
       measure_type,
       measure_value: measure,
       measure_uuid: guid,
+      image_url: fileUri,
     });
     await newMeasurement.save();
 
@@ -55,7 +55,7 @@ export const uploadImage = async (req: Request, res: Response) => {
       res
         .status(500)
         .json({ error_code: "INVALID DATA", error_description: error.message });
-      console.error(error);
     }
+    console.error((error as Error).message as string);
   }
 };

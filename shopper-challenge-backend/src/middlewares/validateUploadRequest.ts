@@ -2,6 +2,7 @@ import {
   isValidBase64,
   isValidDateTime,
   isValidMeasureType,
+  isValidCustomerCode,
 } from "../utils/validators";
 
 export const validateUploadRequest = (body: any) => {
@@ -38,4 +39,10 @@ export const validadeConfirmRequest = (body: any) => {
   }
 
   return body;
+};
+
+export const validadeGetRequest = (params: any) => {
+  const { customer_code } = params;
+  isValidCustomerCode(customer_code);
+  return params;
 };

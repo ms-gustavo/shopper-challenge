@@ -7,6 +7,7 @@ interface IMeasurement extends Document {
   measure_value: number;
   measure_uuid: string;
   confirmed: boolean;
+  image_url: string;
 }
 
 const MeasurementSchema: Schema = new Schema({
@@ -32,6 +33,10 @@ const MeasurementSchema: Schema = new Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  image_url: {
+    type: String,
+    required: true,
   },
   confirmed: {
     type: Boolean,

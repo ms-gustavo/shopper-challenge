@@ -22,3 +22,10 @@ export const isValidMeasureType = (measureType: string): boolean => {
   const validTypes = ["WATER", "GAS"];
   return validTypes.includes(measureType);
 };
+
+export const isValidCustomerCode = (customer_code: string): boolean => {
+  if (!customer_code || typeof customer_code !== "string") {
+    throw new Error("Código do cliente inválido");
+  }
+  return false;
+};
