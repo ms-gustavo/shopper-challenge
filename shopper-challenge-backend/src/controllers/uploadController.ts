@@ -4,6 +4,7 @@ import { processImageWithGemini } from "../services/uploadService";
 import { v4 as uuidv4 } from "uuid";
 import Measurement from "../models/Measurement";
 import { getActualMonth } from "../utils/getActualMonth";
+import { doubleReport, invalidData } from "../utils/errorsCode";
 
 export const uploadImage = async (req: Request, res: Response) => {
   try {
@@ -24,8 +25,8 @@ export const uploadImage = async (req: Request, res: Response) => {
 
     if (existingMeasurement) {
       return res.status(409).json({
-        error_code: "DOUBLE_REPORT",
-        error_description: "Leitura do mês já realizada",
+        error_code: doubleReport.error_code,
+        error_description: doubleReport.error_description,
       });
     }
 
@@ -54,7 +55,10 @@ export const uploadImage = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res
         .status(500)
-        .json({ error_code: "INVALID DATA", error_description: error.message });
+        .json({
+          error_code: invalidData.error_code,
+          error_description: error.message,
+        });
     }
     console.error((error as Error).message as string);
   }

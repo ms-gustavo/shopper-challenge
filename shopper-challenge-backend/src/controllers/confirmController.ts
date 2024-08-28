@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import Measurement from "../models/Measurement";
 import { validadeConfirmRequest } from "../middlewares/validateUploadRequest";
+import {
+  confirmationDuplicate,
+  doubleReport,
+  invalidData,
+  measureNotFound,
+} from "../utils/errorsCode";
 
 export const confirmMeasurement = async (req: Request, res: Response) => {
   try {
@@ -9,15 +15,15 @@ export const confirmMeasurement = async (req: Request, res: Response) => {
     const existingMeasurement = await Measurement.findOne({ measure_uuid });
     if (!existingMeasurement) {
       return res.status(404).json({
-        error_code: "MEASURE_NOT_FOUND",
-        error_description: "Leitura do mês já realizada",
+        error_code: measureNotFound.error_code,
+        error_description: doubleReport.error_description,
       });
     }
 
     if (existingMeasurement.confirmed) {
       return res.status(409).json({
-        error_code: "CONFIRMATION_DUPLICATE",
-        error_description: "Leitura do mês já realizada",
+        error_code: confirmationDuplicate.error_code,
+        error_description: confirmationDuplicate.error_description,
       });
     }
 
@@ -37,7 +43,10 @@ export const confirmMeasurement = async (req: Request, res: Response) => {
     if (error instanceof Error) {
       res
         .status(400)
-        .json({ error_code: "INVALID_DATA", error_description: error.message });
+        .json({
+          error_code: invalidData.error_code,
+          error_description: error.message,
+        });
       console.error(error);
     }
   }

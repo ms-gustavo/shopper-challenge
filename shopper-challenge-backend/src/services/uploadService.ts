@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { saveBase64Image } from "../utils/saveBase64Image";
 import dotenv from "dotenv";
 import { extractValueFromText } from "../utils/extractValueFromText";
+import { stringUtils } from "../utils/stringUtils";
 dotenv.config();
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY!;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -25,13 +26,13 @@ export const processImageWithGemini = async (
   await fileManager.getFile(uploadResponse.file.name);
   const fileUri = uploadResponse.file.uri;
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
+    model: stringUtils.geminiModel,
   });
 
   const promptText =
     measureType === "WATER"
-      ? "Describe the water consumption value in this image. Search for the value above the text 'Consumo (m³)'"
-      : " Describe the gas consumption value in this image.";
+      ? stringUtils.waterPromptText
+      : stringUtils.gasPromptText;
   const result = await model.generateContent([
     {
       fileData: {

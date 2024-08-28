@@ -1,3 +1,4 @@
+import { validationsStrings } from "../utils/errorsCode";
 import {
   isValidBase64,
   isValidDateTime,
@@ -9,19 +10,19 @@ export const validateUploadRequest = (body: any) => {
   const { image, customer_code, measure_datetime, measure_type } = body;
 
   if (!image || !isValidBase64(image)) {
-    throw new Error("Imagem inválida");
+    throw new Error(validationsStrings.invalid_image);
   }
 
   if (!customer_code || typeof customer_code !== "string") {
-    throw new Error("Código do cliente inválido");
+    throw new Error(validationsStrings.invalid_client_code);
   }
 
   if (!measure_datetime || !isValidDateTime(measure_datetime)) {
-    throw new Error("Data inválida");
+    throw new Error(validationsStrings.invalid_date);
   }
 
   if (!measure_type || !isValidMeasureType(measure_type)) {
-    throw new Error("Tipo de medida inválido");
+    throw new Error(validationsStrings.invalid_measure_type);
   }
 
   return body;
@@ -31,11 +32,11 @@ export const validadeConfirmRequest = (body: any) => {
   const { measure_uuid, confirmed_value } = body;
 
   if (!measure_uuid || typeof measure_uuid !== "string") {
-    throw new Error("UUID inválido");
+    throw new Error(validationsStrings.invalid_uuid);
   }
 
   if (!confirmed_value || typeof confirmed_value !== "number") {
-    throw new Error("Valor confirmado inválido");
+    throw new Error(validationsStrings.invalid_confirmed_value);
   }
 
   return body;

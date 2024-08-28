@@ -1,3 +1,5 @@
+import { validationsStrings } from "./errorsCode";
+
 export const isValidBase64 = (base64: string): boolean => {
   try {
     if (base64 === "" || base64.trim() === "") return false;
@@ -25,7 +27,7 @@ export const isValidMeasureType = (measureType: string): boolean => {
 
 export const isValidCustomerCode = (customer_code: string): boolean => {
   if (!customer_code || typeof customer_code !== "string") {
-    throw new Error("Código do cliente inválido");
+    throw new Error(validationsStrings.invalid_client_code);
   }
   return false;
 };

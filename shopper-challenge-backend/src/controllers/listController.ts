@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Measurement from "../models/Measurement";
 import { validadeGetRequest } from "../middlewares/validateUploadRequest";
+import { invalidType, measureNotFound, serverError } from "../utils/errorsCode";
 
 export const listMeasurements = async (req: Request, res: Response) => {
   try {
@@ -12,8 +13,8 @@ export const listMeasurements = async (req: Request, res: Response) => {
       !["WATER", "GAS"].includes(String(measure_type).toUpperCase())
     ) {
       return res.status(400).json({
-        error_code: "INVALID_TYPE",
-        error_description: "Tipo de medição não permitida",
+        error_code: invalidType.error_code,
+        error_description: invalidType.error_description,
       });
     }
 
@@ -38,12 +39,11 @@ export const listMeasurements = async (req: Request, res: Response) => {
 
     if (measures.length === 0) {
       return res.status(404).json({
-        error_code: "MEASURES_NOT_FOUND",
-        error_description: "Nenhuma leitura encontrada",
+        error_code: measureNotFound.error_code,
+        error_description: measureNotFound.error_description,
       });
     }
 
-    console.log(measures[0]);
     res.status(200).json({
       customer_code,
       total,
@@ -59,8 +59,8 @@ export const listMeasurements = async (req: Request, res: Response) => {
   } catch (error: unknown) {
     if (error instanceof Error) {
       res.status(500).json({
-        error_code: "SERVER_ERROR",
-        error_description: "Erro ao processar a solicitação",
+        error_code: serverError.error_code,
+        error_description: serverError.error_description,
       });
     }
     console.log(error);
