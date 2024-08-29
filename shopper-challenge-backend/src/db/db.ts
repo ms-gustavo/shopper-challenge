@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
-const mongoUri = process.env.MONGO_URI!;
+const mongoUri =
+  process.env.MONGO_URI! || "mongodb://mongo:27017/shopper-challenge";
 
 const connectToDb = async () => {
   try {
