@@ -13,4 +13,4 @@
     </ul>
 
    <h2>Link para o Repositório</h2>
-    <p>Você pode acessar o repositório do backend <a href=https://github.com/ms-gustavo/shopper-challenge/tree/main/shopper-challenge-backend" target="_blank">aqui</a>.</p>
+    <p>Você pode acessar o repositório do backend <a href=https://github.com/ms-gustavo/shopper-challenge/tree/main/shopper-challenge-backend target="_blank">aqui</a>.</p>
