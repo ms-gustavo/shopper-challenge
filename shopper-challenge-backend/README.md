@@ -61,7 +61,7 @@
 <h2>Imagem modelo de envio para IA</h2>
 <p>Conta de luz:</p>
 
-![Conta de luz exemplo](https://github.com/user-attachments/assets/bf27c322-8e8c-407d-94ac-3485126d8ee5)
+![Conta de luz exemplo](https://github.com/user-attachments/assets/ae3b55c3-2abe-4965-888f-669c76bd037d)
 
 
 <p>Conta de gás:</p>
