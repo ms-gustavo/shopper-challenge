@@ -5,6 +5,7 @@ import { saveBase64Image } from "../utils/saveBase64Image";
 import dotenv from "dotenv";
 import { extractValueFromText } from "../utils/extractValueFromText";
 import { stringUtils } from "../utils/stringUtils";
+import { invalidIaResponse } from "../utils/errorsCode";
 dotenv.config();
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY!;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -43,7 +44,10 @@ export const processImageWithGemini = async (
     { text: promptText },
   ]);
 
-  const measure = extractValueFromText(result.response.text());
+  const measure = result.response.text();
+  if (isNaN(Number(measure))) {
+    throw new Error(invalidIaResponse.invalidIaResponse);
+  }
 
   return { measure, fileUri };
 };

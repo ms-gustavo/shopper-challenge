@@ -35,3 +35,7 @@ export const validationsStrings = {
   invalid_uuid: "UUID inválido",
   invalid_confirmed_value: "Valor confirmado inválido",
 };
+
+export const invalidIaResponse = {
+  invalidIaResponse: "Erro durante o processamento da imagem. Tente novamente.",
+};
