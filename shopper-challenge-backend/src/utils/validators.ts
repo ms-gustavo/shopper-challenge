@@ -1,3 +1,4 @@
+import { CustomError } from "./CustomError";
 import { validationsStrings } from "./errorsCode";
 
 export const isValidBase64 = (base64: string): boolean => {
@@ -27,7 +28,7 @@ export const isValidMeasureType = (measureType: string): boolean => {
 
 export const isValidCustomerCode = (customer_code: string): boolean => {
   if (!customer_code || typeof customer_code !== "string") {
-    throw new Error(validationsStrings.invalid_client_code);
+    throw new CustomError(validationsStrings.invalid_client_code, 400);
   }
   return false;
 };

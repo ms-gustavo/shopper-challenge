@@ -1,3 +1,4 @@
+import { CustomError } from "../utils/CustomError";
 import { validationsStrings } from "../utils/errorsCode";
 import {
   isValidBase64,
@@ -10,19 +11,19 @@ export const validateUploadRequest = (body: any) => {
   const { image, customer_code, measure_datetime, measure_type } = body;
 
   if (!image || !isValidBase64(image)) {
-    throw new Error(validationsStrings.invalid_image);
+    throw new CustomError(validationsStrings.invalid_image, 400);
   }
 
   if (!customer_code || typeof customer_code !== "string") {
-    throw new Error(validationsStrings.invalid_client_code);
+    throw new CustomError(validationsStrings.invalid_client_code, 400);
   }
 
   if (!measure_datetime || !isValidDateTime(measure_datetime)) {
-    throw new Error(validationsStrings.invalid_date);
+    throw new CustomError(validationsStrings.invalid_date, 400);
   }
 
   if (!measure_type || !isValidMeasureType(measure_type)) {
-    throw new Error(validationsStrings.invalid_measure_type);
+    throw new CustomError(validationsStrings.invalid_measure_type, 400);
   }
 
   return body;
@@ -32,11 +33,11 @@ export const validadeConfirmRequest = (body: any) => {
   const { measure_uuid, confirmed_value } = body;
 
   if (!measure_uuid || typeof measure_uuid !== "string") {
-    throw new Error(validationsStrings.invalid_uuid);
+    throw new CustomError(validationsStrings.invalid_uuid, 400);
   }
 
   if (!confirmed_value || typeof confirmed_value !== "number") {
-    throw new Error(validationsStrings.invalid_confirmed_value);
+    throw new CustomError(validationsStrings.invalid_confirmed_value, 400);
   }
 
   return body;

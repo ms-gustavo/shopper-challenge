@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import Measurement from "../models/Measurement";
 import { validadeGetRequest } from "../middlewares/validateUploadRequest";
-import { invalidType, measureNotFound, serverError } from "../utils/errorsCode";
+import { invalidData, invalidType, measureNotFound } from "../utils/errorsCode";
+import { CustomError } from "../utils/CustomError";
 
 export const listMeasurements = async (req: Request, res: Response) => {
   try {
@@ -57,12 +58,17 @@ export const listMeasurements = async (req: Request, res: Response) => {
       })),
     });
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        error_code: serverError.error_code,
-        error_description: serverError.error_description,
+    if (error instanceof CustomError) {
+      console.log(error);
+      return res.status(error.statusCode).json({
+        error_code: error.statusCode,
+        error_description: error.message,
       });
     }
-    console.log(error);
+    res.status(500).json({
+      error_code: invalidData.error_code,
+      error_description: "Erro ao processar a solicitação",
+    });
+    console.log((error as Error).message as string);
   }
 };

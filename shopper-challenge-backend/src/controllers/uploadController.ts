@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import Measurement from "../models/Measurement";
 import { getActualMonth } from "../utils/getActualMonth";
 import { doubleReport, invalidData } from "../utils/errorsCode";
+import { CustomError } from "../utils/CustomError";
 
 export const uploadImage = async (req: Request, res: Response) => {
   try {
@@ -52,14 +53,17 @@ export const uploadImage = async (req: Request, res: Response) => {
       image_url: fileUri,
     });
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      res
-        .status(500)
-        .json({
-          error_code: invalidData.error_code,
-          error_description: error.message,
-        });
+    if (error instanceof CustomError) {
+      console.log(error);
+      return res.status(error.statusCode).json({
+        error_code: error.statusCode,
+        error_description: error.message,
+      });
     }
-    console.error((error as Error).message as string);
+    res.status(500).json({
+      error_code: invalidData.error_code,
+      error_description: "Erro ao processar a solicitação",
+    });
+    console.log((error as Error).message as string);
   }
 };
