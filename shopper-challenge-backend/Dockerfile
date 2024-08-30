@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN mkdir -p /usr/src/app/uploads && chmod -R 777 /usr/src/app/uploads
+RUN chmod -R 777 /usr/src/app
 
 RUN npm run build
 

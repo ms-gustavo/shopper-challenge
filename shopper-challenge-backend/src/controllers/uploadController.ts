@@ -60,6 +60,19 @@ export const uploadImage = async (req: Request, res: Response) => {
         error_description: error.message,
       });
     }
+
+    if (
+      error instanceof Error &&
+      error.message.includes("GoogleGenerativeAI Error")
+    ) {
+      console.log(error.message);
+      return res.status(500).json({
+        error_code: 500,
+        error_description:
+          "Erro interno na API do Google Generative AI. Por favor, tente novamente mais tarde.",
+      });
+    }
+
     res.status(500).json({
       error_code: invalidData.error_code,
       error_description: "Erro ao processar a solicitação",
